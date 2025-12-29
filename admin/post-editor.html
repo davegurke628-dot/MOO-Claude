@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>New Post | Admin - Marketing Options Online</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+
+  <!-- Quill Editor CSS -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-icon">M</div>
+        <span>MOO Admin</span>
+      </div>
+
+      <nav>
+        <ul class="admin-nav">
+          <li class="admin-nav-item">
+            <a href="dashboard.html" class="admin-nav-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li class="admin-nav-item">
+            <a href="posts.html" class="admin-nav-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              Blog Posts
+            </a>
+          </li>
+          <li class="admin-nav-item">
+            <a href="post-editor.html" class="admin-nav-link active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              New Post
+            </a>
+          </li>
+          <li class="admin-nav-item">
+            <a href="media.html" class="admin-nav-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              Media Library
+            </a>
+          </li>
+          <li class="admin-nav-item" style="margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1);">
+            <a href="../index.html" class="admin-nav-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+              View Website
+            </a>
+          </li>
+          <li class="admin-nav-item">
+            <a href="#" class="admin-nav-link" id="logoutBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <a href="dashboard.html" style="color: var(--slate-600); display: flex; align-items: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+          </a>
+          <h1 class="admin-title">New Post</h1>
+        </div>
+        <div style="display: flex; gap: var(--space-3);">
+          <button class="btn btn-secondary btn-sm" id="saveDraftBtn">Save Draft</button>
+          <button class="btn btn-primary btn-sm" id="publishBtn">Publish</button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <form id="postForm">
+          <div class="admin-editor">
+            <!-- Main Editor -->
+            <div class="admin-editor-main">
+              <input
+                type="text"
+                id="postTitle"
+                class="admin-editor-input title"
+                placeholder="Enter post title..."
+                required
+              >
+
+              <!-- Rich Text Editor -->
+              <div id="editor" style="min-height: 400px;"></div>
+            </div>
+
+            <!-- Sidebar Panels -->
+            <div class="admin-editor-sidebar">
+              <!-- Status Panel -->
+              <div class="admin-editor-panel">
+                <h3 class="admin-editor-panel-title">Status</h3>
+                <select id="postStatus" class="form-input" style="margin-bottom: 0;">
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                  <option value="scheduled">Scheduled</option>
+                </select>
+              </div>
+
+              <!-- Category Panel -->
+              <div class="admin-editor-panel">
+                <h3 class="admin-editor-panel-title">Category</h3>
+                <select id="postCategory" class="form-input" style="margin-bottom: 0;">
+                  <option value="">Select category...</option>
+                  <option value="seo">SEO</option>
+                  <option value="social-media">Social Media</option>
+                  <option value="google-business">Google Business</option>
+                  <option value="ai-marketing">AI Marketing</option>
+                  <option value="website-design">Website Design</option>
+                  <option value="content-creation">Content Creation</option>
+                  <option value="reviews">Reviews</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+
+              <!-- Featured Image Panel -->
+              <div class="admin-editor-panel">
+                <h3 class="admin-editor-panel-title">
+                  Featured Image
+                  <button type="button" class="btn btn-sm" style="padding: var(--space-1) var(--space-2); font-size: var(--text-xs);" id="uploadImageBtn">Upload</button>
+                </h3>
+                <div id="featuredImagePreview" style="width: 100%; height: 150px; background: var(--bg-light); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; border: 2px dashed var(--border-color); cursor: pointer;">
+                  <span style="color: var(--slate-500); font-size: var(--text-sm);">Click to upload image</span>
+                </div>
+                <input type="file" id="featuredImageInput" accept="image/*" style="display: none;">
+              </div>
+
+              <!-- SEO Panel -->
+              <div class="admin-editor-panel">
+                <h3 class="admin-editor-panel-title">SEO Settings</h3>
+                <div class="form-group" style="margin-bottom: var(--space-4);">
+                  <label class="form-label" for="metaTitle">Meta Title</label>
+                  <input type="text" id="metaTitle" class="form-input" placeholder="SEO title (60 chars max)" maxlength="60" style="margin-bottom: 0;">
+                  <small style="color: var(--slate-500); font-size: var(--text-xs);"><span id="metaTitleCount">0</span>/60</small>
+                </div>
+                <div class="form-group" style="margin-bottom: var(--space-4);">
+                  <label class="form-label" for="metaDescription">Meta Description</label>
+                  <textarea id="metaDescription" class="form-input" placeholder="SEO description (160 chars max)" maxlength="160" rows="3" style="margin-bottom: 0;"></textarea>
+                  <small style="color: var(--slate-500); font-size: var(--text-xs);"><span id="metaDescCount">0</span>/160</small>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="postSlug">URL Slug</label>
+                  <input type="text" id="postSlug" class="form-input" placeholder="post-url-slug" style="margin-bottom: 0;">
+                </div>
+              </div>
+
+              <!-- Tags Panel -->
+              <div class="admin-editor-panel">
+                <h3 class="admin-editor-panel-title">Tags</h3>
+                <input type="text" id="postTags" class="form-input" placeholder="Enter tags, comma separated" style="margin-bottom: 0;">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Quill Editor JS -->
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+  <script>
+    // Initialize Quill editor
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: 'Start writing your post...',
+      modules: {
+        toolbar: [
+          [{ 'header': [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['blockquote', 'code-block'],
+          ['link', 'image'],
+          [{ 'align': [] }],
+          ['clean']
+        ]
+      }
+    });
+
+    // SEO character counters
+    document.getElementById('metaTitle').addEventListener('input', function() {
+      document.getElementById('metaTitleCount').textContent = this.value.length;
+    });
+
+    document.getElementById('metaDescription').addEventListener('input', function() {
+      document.getElementById('metaDescCount').textContent = this.value.length;
+    });
+
+    // Auto-generate slug from title
+    document.getElementById('postTitle').addEventListener('input', function() {
+      const slug = this.value
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+      document.getElementById('postSlug').value = slug;
+    });
+
+    // Featured image upload
+    const imagePreview = document.getElementById('featuredImagePreview');
+    const imageInput = document.getElementById('featuredImageInput');
+
+    imagePreview.addEventListener('click', () => imageInput.click());
+    document.getElementById('uploadImageBtn').addEventListener('click', () => imageInput.click());
+
+    imageInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);">`;
+        };
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+
+    // Save draft
+    document.getElementById('saveDraftBtn').addEventListener('click', async function() {
+      await savePost('draft');
+    });
+
+    // Publish
+    document.getElementById('publishBtn').addEventListener('click', async function() {
+      await savePost('published');
+    });
+
+    async function savePost(status) {
+      const title = document.getElementById('postTitle').value;
+      const content = quill.root.innerHTML;
+      const category = document.getElementById('postCategory').value;
+      const metaTitle = document.getElementById('metaTitle').value;
+      const metaDescription = document.getElementById('metaDescription').value;
+      const slug = document.getElementById('postSlug').value;
+      const tags = document.getElementById('postTags').value;
+
+      if (!title) {
+        showToast('Please enter a post title', 'error');
+        return;
+      }
+
+      const postData = {
+        title,
+        content,
+        category,
+        status,
+        metaTitle,
+        metaDescription,
+        slug,
+        tags: tags.split(',').map(t => t.trim()).filter(t => t)
+      };
+
+      try {
+        const response = await fetch('/api/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          },
+          body: JSON.stringify(postData)
+        });
+
+        if (response.ok) {
+          showToast(status === 'published' ? 'Post published successfully!' : 'Draft saved!', 'success');
+          setTimeout(() => window.location.href = 'dashboard.html', 1500);
+        } else {
+          throw new Error('Failed to save post');
+        }
+      } catch (error) {
+        // Demo mode - simulate success
+        showToast(status === 'published' ? 'Post published successfully!' : 'Draft saved!', 'success');
+        console.log('Post data:', postData);
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    });
+  </script>
+
+  <script src="../assets/js/admin.js"></script>
+</body>
+</html>

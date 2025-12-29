@@ -1,0 +1,33 @@
+{
+  "name": "marketing-options-online",
+  "version": "1.0.0",
+  "description": "Marketing Options Online - Digital Marketing Agency Website with CMS",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "setup": "mkdir -p assets/images/uploads && npm install"
+  },
+  "keywords": [
+    "marketing",
+    "digital-marketing",
+    "cms",
+    "blog",
+    "website"
+  ],
+  "author": "Marketing Options Online",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

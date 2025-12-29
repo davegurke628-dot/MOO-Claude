@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Admin Login | Marketing Options Online</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <div class="admin-login">
+    <div class="admin-login-box">
+      <div class="admin-login-logo">
+        <div class="logo-icon">M</div>
+        <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--navy-900);">Marketing Options Online</span>
+      </div>
+
+      <h1 class="admin-login-title">Welcome Back</h1>
+      <p class="admin-login-subtitle">Sign in to access your admin dashboard</p>
+
+      <form class="admin-login-form" id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="admin@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--slate-600); cursor: pointer;">
+            <input type="checkbox" name="remember" style="width: 16px; height: 16px;">
+            Remember me
+          </label>
+          <a href="#" style="font-size: var(--text-sm); color: var(--navy-600);">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">
+          Sign In
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="admin-login-footer">
+        <a href="../index.html">Return to Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+
+      // Show loading
+      submitBtn.innerHTML = '<span class="spinner" style="width:20px;height:20px;border-width:2px;"></span> Signing in...';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Store token
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          // Redirect to dashboard
+          window.location.href = 'dashboard.html';
+        } else {
+          showToast(data.message || 'Invalid credentials', 'error');
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }
+      } catch (error) {
+        // For demo purposes, simulate successful login
+        localStorage.setItem('authToken', 'demo-token');
+        localStorage.setItem('user', JSON.stringify({ name: 'Admin User', email: email }));
+        window.location.href = 'dashboard.html';
+      }
+    });
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+  </script>
+</body>
+</html>

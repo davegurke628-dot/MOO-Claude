@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "title": "10 SEO Strategies That Will Transform Your Local Business in 2025",
+    "slug": "10-seo-strategies-2025",
+    "content": "<p>Discover the proven SEO tactics that are helping local businesses dominate search results...</p>",
+    "excerpt": "Discover the proven SEO tactics that are helping local businesses dominate search results and attract more customers than ever before.",
+    "category": "seo",
+    "tags": [
+      "SEO",
+      "Local Business",
+      "2025"
+    ],
+    "status": "published",
+    "meta_title": "10 SEO Strategies for Local Business in 2025",
+    "meta_description": "Discover the proven SEO tactics that are helping local businesses dominate search results.",
+    "author_id": 1,
+    "views": 1234,
+    "published_at": "2025-12-28T14:08:36.685Z",
+    "created_at": "2025-12-28T14:08:36.685Z"
+  },
+  {
+    "id": 2,
+    "title": "How to Create a Social Media Strategy That Actually Converts",
+    "slug": "social-media-strategy-converts",
+    "content": "<p>Stop posting randomly and start seeing real results from your social media efforts...</p>",
+    "excerpt": "Stop posting randomly and start seeing real results from your social media efforts with this proven strategy framework.",
+    "category": "social-media",
+    "tags": [
+      "Social Media",
+      "Strategy",
+      "Marketing"
+    ],
+    "status": "published",
+    "author_id": 1,
+    "views": 987,
+    "published_at": "2025-12-28T14:08:36.685Z",
+    "created_at": "2025-12-28T14:08:36.686Z"
+  },
+  {
+    "id": 3,
+    "title": "The Ultimate Guide to Google Business Profile Optimization",
+    "slug": "google-business-profile-optimization",
+    "content": "<p>Learn how to fully optimize your Google Business Profile to appear in the local pack...</p>",
+    "excerpt": "Learn how to fully optimize your Google Business Profile to appear in the local pack and attract more customers.",
+    "category": "google-business",
+    "tags": [
+      "Google Business",
+      "Local SEO"
+    ],
+    "status": "published",
+    "author_id": 1,
+    "views": 756,
+    "published_at": "2025-12-28T14:08:36.685Z",
+    "created_at": "2025-12-28T14:08:36.686Z"
+  },
+  {
+    "id": 4,
+    "title": "5 AI Tools Every Small Business Should Be Using Right Now",
+    "slug": "5-ai-tools-small-business",
+    "content": "<p>Artificial intelligence isn't just for big corporations...</p>",
+    "excerpt": "Artificial intelligence isn't just for big corporations. These affordable AI tools can transform how you market your business.",
+    "category": "ai-marketing",
+    "tags": [
+      "AI",
+      "Tools",
+      "Small Business"
+    ],
+    "status": "draft",
+    "author_id": 1,
+    "views": 0,
+    "created_at": "2025-12-28T14:08:36.687Z"
+  }
+]
