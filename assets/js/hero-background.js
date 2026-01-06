@@ -225,7 +225,7 @@
     if (!gl || !program) return;
 
     gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-    gl.uniform1f(timeLocation, time * 0.001);
+    gl.uniform1f(timeLocation, time * 0.0004); // Reduced speed (40% of original)
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
