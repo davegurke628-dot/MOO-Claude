@@ -11,8 +11,8 @@
   let animationId;
 
   function init() {
-    const heroSection = document.querySelector('.hero');
-    if (!heroSection) return;
+    const bgContainer = document.querySelector('.webgl-background');
+    if (!bgContainer) return;
 
     canvas = document.getElementById('heroCanvas');
     if (!canvas) return;
@@ -22,18 +22,18 @@
 
     if (!gl) {
       // WebGL not supported - show fallback
-      heroSection.classList.add('webgl-failed');
+      document.body.classList.add('webgl-failed');
       console.warn('WebGL not supported, using fallback');
       return;
     }
 
     // WebGL supported - hide fallback shapes
-    heroSection.classList.add('webgl-active');
+    document.body.classList.add('webgl-active');
 
     // Compile shaders and create program
     if (!setupShaders()) {
-      heroSection.classList.remove('webgl-active');
-      heroSection.classList.add('webgl-failed');
+      document.body.classList.remove('webgl-active');
+      document.body.classList.add('webgl-failed');
       return;
     }
 
@@ -209,10 +209,10 @@
   function resize() {
     if (!canvas || !gl) return;
 
-    // Use devicePixelRatio for crisp rendering on high-DPI displays
+    // Use viewport dimensions for fixed positioning
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-    const width = canvas.clientWidth * pixelRatio;
-    const height = canvas.clientHeight * pixelRatio;
+    const width = window.innerWidth * pixelRatio;
+    const height = window.innerHeight * pixelRatio;
 
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;

@@ -437,15 +437,15 @@ a:hover {
   pointer-events: none;
 }
 
-/* WebGL Animated Background */
-.hero-background {
-  position: absolute;
+/* Fixed WebGL Background (Parallax) */
+.webgl-background {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
 }
 
 #heroCanvas {
@@ -454,7 +454,7 @@ a:hover {
   display: block;
 }
 
-.hero-grid-overlay {
+.webgl-grid-overlay {
   position: absolute;
   inset: 0;
   background-size: 40px 40px;
@@ -464,14 +464,19 @@ a:hover {
   pointer-events: none;
 }
 
+/* Parallax sections - transparent to show fixed background */
+.parallax-section {
+  position: relative;
+  background: transparent !important;
+}
+
+.parallax-section::before {
+  display: none !important;
+}
+
 /* Hide existing pattern when WebGL is active */
 .webgl-active .hero-pattern {
   display: none;
-}
-
-/* Hide existing pattern's ::before gradient when WebGL is active */
-.webgl-active.hero::before {
-  opacity: 0.3;
 }
 
 /* Fallback: show shapes only if WebGL fails */
@@ -636,13 +641,16 @@ a:hover {
 
 /* ---------- Services Section ---------- */
 .services {
-  background: var(--white);
+  position: relative;
+  overflow: hidden;
 }
 
 .section-header {
   text-align: center;
   max-width: 700px;
   margin: 0 auto var(--space-16);
+  position: relative;
+  z-index: 1;
 }
 
 .section-eyebrow {
@@ -664,54 +672,110 @@ a:hover {
   color: var(--text-secondary);
 }
 
+/* Services section header overrides */
+.services .section-eyebrow {
+  color: var(--gold-400);
+}
+
+.services .section-title {
+  color: var(--white);
+}
+
+.services .section-desc {
+  color: var(--slate-400);
+}
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-8);
+  position: relative;
+  z-index: 1;
 }
 
+/* Glass Card Base Styles */
 .service-card {
-  background: var(--bg-light);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: var(--space-10);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--border-light);
-  transition: all var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  z-index: 1;
 }
 
+/* Animated Gradient Border Glow */
 .service-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--gold-500) 0%, var(--gold-400) 100%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--transition-base);
+  inset: -2px;
+  border-radius: calc(var(--radius-xl) + 2px);
+  background: linear-gradient(
+    45deg,
+    var(--gold-500),
+    var(--gold-400),
+    #4FD1C5,
+    var(--navy-600),
+    var(--gold-500)
+  );
+  background-size: 400% 400%;
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
+/* Inner background to cover the gradient (creates border effect) */
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: calc(var(--radius-xl) - 2px);
+  background: rgba(13, 27, 42, 0.95);
+  z-index: -1;
+}
+
+/* Hover Effects */
 .service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.12);
   border-color: transparent;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(214, 158, 46, 0.15);
 }
 
 .service-card:hover::before {
-  transform: scaleX(1);
+  opacity: 1;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Gradient Animation Keyframes */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .service-icon {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-700) 100%);
+  background: linear-gradient(135deg, rgba(214, 158, 46, 0.2) 0%, rgba(214, 158, 46, 0.1) 100%);
+  border: 1px solid rgba(214, 158, 46, 0.3);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-6);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.service-card:hover .service-icon {
+  background: linear-gradient(135deg, rgba(214, 158, 46, 0.3) 0%, rgba(214, 158, 46, 0.15) 100%);
+  box-shadow: 0 0 20px rgba(214, 158, 46, 0.3);
 }
 
 .service-icon svg {
@@ -723,12 +787,17 @@ a:hover {
 .service-title {
   font-size: var(--text-xl);
   margin-bottom: var(--space-3);
+  color: var(--white);
+  position: relative;
+  z-index: 1;
 }
 
 .service-desc {
-  color: var(--text-secondary);
+  color: var(--slate-400);
   margin-bottom: var(--space-6);
   font-size: var(--text-sm);
+  position: relative;
+  z-index: 1;
 }
 
 .service-link {
@@ -737,7 +806,15 @@ a:hover {
   gap: var(--space-2);
   font-weight: 600;
   font-size: var(--text-sm);
-  color: var(--navy-700);
+  color: var(--gold-400);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.service-link:hover {
+  color: var(--gold-300);
+  text-shadow: 0 0 10px rgba(214, 158, 46, 0.5);
 }
 
 .service-link svg {
@@ -747,7 +824,7 @@ a:hover {
 }
 
 .service-link:hover svg {
-  transform: translateX(4px);
+  transform: translateX(6px);
 }
 
 /* ---------- Stats Section ---------- */
@@ -935,6 +1012,55 @@ a:hover {
   width: 18px;
   height: 18px;
   color: var(--gold-500);
+}
+
+/* Testimonials Section - Parallax Version */
+.testimonials.parallax-section .section-eyebrow {
+  color: var(--gold-400);
+}
+
+.testimonials.parallax-section .section-title {
+  color: var(--white);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.testimonials.parallax-section .section-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Glass effect testimonial cards */
+.testimonials.parallax-section .testimonial-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.testimonials.parallax-section .testimonial-card::before {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.testimonials.parallax-section .testimonial-content {
+  color: var(--white);
+}
+
+.testimonials.parallax-section .testimonial-name {
+  color: var(--white);
+}
+
+.testimonials.parallax-section .testimonial-role {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.testimonials.parallax-section .testimonial-avatar {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.testimonials.parallax-section .testimonial-stars svg {
+  color: var(--gold-400);
 }
 
 /* ---------- Lead Magnet Section ---------- */

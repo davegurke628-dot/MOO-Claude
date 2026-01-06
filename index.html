@@ -24,6 +24,12 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+  <!-- Fixed WebGL Background (Parallax) -->
+  <div class="webgl-background">
+    <canvas id="heroCanvas"></canvas>
+    <div class="webgl-grid-overlay"></div>
+  </div>
+
   <!-- Header -->
   <header class="header" id="header">
     <div class="container">
@@ -52,12 +58,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <!-- WebGL Animated Background -->
-    <div class="hero-background">
-      <canvas id="heroCanvas"></canvas>
-      <div class="hero-grid-overlay"></div>
-    </div>
+  <section class="hero parallax-section">
     <div class="hero-pattern"></div>
     <div class="container">
       <div class="hero-content">
@@ -141,7 +142,7 @@
   </section>
 
   <!-- Services Section -->
-  <section class="services section" id="services">
+  <section class="services section parallax-section" id="services">
     <div class="container">
       <div class="section-header">
         <span class="section-eyebrow">Our Services</span>
@@ -322,7 +323,7 @@
   </section>
 
   <!-- Testimonials Section -->
-  <section class="testimonials section">
+  <section class="testimonials section parallax-section">
     <div class="container">
       <div class="section-header">
         <span class="section-eyebrow">Testimonials</span>
