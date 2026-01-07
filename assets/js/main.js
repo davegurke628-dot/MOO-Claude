@@ -7,10 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize all modules
   initHeader();
   initMobileMenu();
+  initDropdowns();
   initScrollAnimations();
   initCounterAnimations();
   initForms();
   initSmoothScroll();
+  initFaqAccordion();
 });
 
 /**
@@ -65,6 +67,85 @@ function initMobileMenu() {
       menuToggle.classList.remove('active');
       nav.classList.remove('active');
     }
+  });
+}
+
+/**
+ * Dropdown menu toggle (for mobile)
+ */
+function initDropdowns() {
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+  if (dropdowns.length === 0) return;
+
+  dropdowns.forEach(dropdown => {
+    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+
+    if (!trigger) return;
+
+    trigger.addEventListener('click', (e) => {
+      // Only handle click toggle on mobile (hover works on desktop)
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Close other open dropdowns
+        dropdowns.forEach(other => {
+          if (other !== dropdown) {
+            other.classList.remove('active');
+          }
+        });
+
+        dropdown.classList.toggle('active');
+      }
+    });
+  });
+
+  // Close dropdowns when clicking outside on mobile
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('active');
+        }
+      });
+    }
+  });
+
+  // Close dropdowns when window is resized above mobile breakpoint
+  window.addEventListener('resize', debounce(() => {
+    if (window.innerWidth > 768) {
+      dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+    }
+  }, 100));
+}
+
+/**
+ * FAQ Accordion functionality
+ */
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  if (faqItems.length === 0) return;
+
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+
+    if (!question) return;
+
+    question.addEventListener('click', () => {
+      // Close other open items (accordion behavior)
+      faqItems.forEach(other => {
+        if (other !== item && other.classList.contains('active')) {
+          other.classList.remove('active');
+        }
+      });
+
+      // Toggle current item
+      item.classList.toggle('active');
+    });
   });
 }
 
