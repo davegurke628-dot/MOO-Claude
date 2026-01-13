@@ -4,7 +4,9 @@
    ============================================ */
 
 /* ---------- CSS Reset & Base ---------- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -132,19 +134,41 @@ body {
 }
 
 /* ---------- Typography ---------- */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.2;
   color: var(--navy-900);
 }
 
-h1 { font-size: var(--text-5xl); }
-h2 { font-size: var(--text-4xl); }
-h3 { font-size: var(--text-3xl); }
-h4 { font-size: var(--text-2xl); }
-h5 { font-size: var(--text-xl); }
-h6 { font-size: var(--text-lg); }
+h1 {
+  font-size: var(--text-5xl);
+}
+
+h2 {
+  font-size: var(--text-4xl);
+}
+
+h3 {
+  font-size: var(--text-3xl);
+}
+
+h4 {
+  font-size: var(--text-2xl);
+}
+
+h5 {
+  font-size: var(--text-xl);
+}
+
+h6 {
+  font-size: var(--text-lg);
+}
 
 p {
   margin-bottom: var(--space-4);
@@ -205,9 +229,17 @@ a:hover {
   gap: var(--space-8);
 }
 
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
 
 .flex {
   display: flex;
@@ -319,7 +351,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 100px;
 }
 
 .logo {
@@ -332,17 +364,22 @@ a:hover {
   color: var(--navy-900);
 }
 
+.logo-img {
+  height: 80px;
+  width: auto;
+  display: block;
+}
+
+.footer-logo-img {
+  height: 100px;
+  width: auto;
+  display: block;
+}
+
+/* Keep old classes for backward compatibility during transition if needed, 
+   but they will be hidden in the new HTML structure */
 .logo-icon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-600) 100%);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold-400);
-  font-weight: 800;
-  font-size: var(--text-lg);
+  display: none;
 }
 
 .nav {
@@ -713,14 +750,12 @@ a:hover {
   position: absolute;
   inset: -2px;
   border-radius: calc(var(--radius-xl) + 2px);
-  background: linear-gradient(
-    45deg,
-    var(--gold-500),
-    var(--gold-400),
-    #4FD1C5,
-    var(--navy-600),
-    var(--gold-500)
-  );
+  background: linear-gradient(45deg,
+      var(--gold-500),
+      var(--gold-400),
+      #4FD1C5,
+      var(--navy-600),
+      var(--gold-500));
   background-size: 400% 400%;
   z-index: -2;
   opacity: 0;
@@ -754,8 +789,15 @@ a:hover {
 
 /* Gradient Animation Keyframes */
 @keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .service-icon {
@@ -1439,22 +1481,11 @@ a:hover {
 }
 
 .footer-logo-icon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--navy-900);
-  font-weight: 800;
-  font-size: var(--text-lg);
+  display: none;
 }
 
 .footer-logo-text {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 700;
+  display: none;
 }
 
 .footer-brand p {
@@ -1541,8 +1572,13 @@ a:hover {
 
 /* ---------- Animations ---------- */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
@@ -1550,6 +1586,7 @@ a:hover {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1557,8 +1594,15 @@ a:hover {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
 }
 
 @keyframes slideInRight {
@@ -1566,6 +1610,7 @@ a:hover {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -2334,16 +2379,14 @@ a:hover {
   font-weight: 700;
 }
 
-.admin-logo-icon {
-  width: 36px;
+.admin-logo-img {
   height: 36px;
-  background: var(--gold-500);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--navy-900);
-  font-weight: 800;
+  width: auto;
+  display: block;
+}
+
+.admin-logo-icon {
+  display: none;
 }
 
 .admin-nav {
@@ -2784,21 +2827,53 @@ a:hover {
   border: 0;
 }
 
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
 
-.mb-0 { margin-bottom: 0; }
-.mb-4 { margin-bottom: var(--space-4); }
-.mb-8 { margin-bottom: var(--space-8); }
-.mb-12 { margin-bottom: var(--space-12); }
+.text-left {
+  text-align: left;
+}
 
-.mt-0 { margin-top: 0; }
-.mt-4 { margin-top: var(--space-4); }
-.mt-8 { margin-top: var(--space-8); }
+.text-right {
+  text-align: right;
+}
 
-.hidden { display: none; }
-.visible { display: block; }
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+
+.mb-8 {
+  margin-bottom: var(--space-8);
+}
+
+.mb-12 {
+  margin-bottom: var(--space-12);
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
+.mt-8 {
+  margin-top: var(--space-8);
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
 
 /* Notification/Toast */
 .toast {
@@ -2843,7 +2918,9 @@ a:hover {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-overlay {
@@ -3227,7 +3304,7 @@ a:hover {
   direction: rtl;
 }
 
-.service-content-grid.reverse > * {
+.service-content-grid.reverse>* {
   direction: ltr;
 }
 
