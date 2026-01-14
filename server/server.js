@@ -285,6 +285,42 @@ app.get('/api/auth/me', authenticateToken, (req, res) => {
   }
 });
 
+// Update user settings
+app.put('/api/auth/settings', authenticateToken, (req, res) => {
+  const { name, email, password } = req.body;
+  const userId = req.user.id;
+
+  const existing = usersDB.getById(userId);
+  if (!existing) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  // Check email uniqueness if changed
+  if (email && email !== existing.email) {
+    const emailExists = usersDB.getByField('email', email);
+    if (emailExists && emailExists.id !== userId) {
+      return res.status(400).json({ message: 'Email already in use' });
+    }
+  }
+
+  const updates = {
+    name: name || existing.name,
+    email: email || existing.email
+  };
+
+  if (password) {
+    updates.password = bcrypt.hashSync(password, 10);
+  }
+
+  const updatedUser = usersDB.update(userId, updates);
+  const { password: _, ...safeUser } = updatedUser;
+
+  res.json({
+    user: safeUser,
+    message: 'Settings updated successfully'
+  });
+});
+
 // ==================== POSTS ROUTES ====================
 
 // Get all posts
@@ -531,13 +567,15 @@ app.get('/api/stats', authenticateToken, (req, res) => {
   const draftPosts = posts.filter(p => p.status === 'draft').length;
   const totalViews = posts.reduce((sum, p) => sum + (p.views || 0), 0);
   const totalLeads = leadsDB.getAll().length;
+  const totalCategories = categoriesDB.getAll().length;
 
   res.json({
     totalPosts,
     publishedPosts,
     draftPosts,
     totalViews,
-    totalLeads
+    totalLeads,
+    totalCategories
   });
 });
 

@@ -16,7 +16,7 @@
     rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/admin-dark.css">
 </head>
 
 <body>
@@ -69,6 +69,16 @@
               Media Library
             </a>
           </li>
+          <li class="admin-nav-item">
+            <a href="settings.html" class="admin-nav-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+              Settings
+            </a>
+          </li>
           <li class="admin-nav-item"
             style="margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid rgba(255,255,255,0.1);">
             <a href="../index.html" class="admin-nav-link">
@@ -116,23 +126,23 @@
         <div class="admin-stats">
           <div class="admin-stat-card">
             <div class="admin-stat-label">Total Posts</div>
-            <div class="admin-stat-value" id="totalPosts">12</div>
+            <div class="admin-stat-value" id="totalPosts">...</div>
             <div class="admin-stat-change positive">+2 this month</div>
           </div>
           <div class="admin-stat-card">
-            <div class="admin-stat-label">Published</div>
-            <div class="admin-stat-value" id="publishedPosts">10</div>
-            <div class="admin-stat-change positive">+1 this week</div>
+            <div class="admin-stat-label">Categories</div>
+            <div class="admin-stat-value" id="totalCategories">...</div>
+            <div class="admin-stat-change">Active sections</div>
           </div>
           <div class="admin-stat-card">
             <div class="admin-stat-label">Drafts</div>
-            <div class="admin-stat-value" id="draftPosts">2</div>
+            <div class="admin-stat-value" id="draftPosts">...</div>
             <div class="admin-stat-change">Pending review</div>
           </div>
           <div class="admin-stat-card">
-            <div class="admin-stat-label">Page Views</div>
-            <div class="admin-stat-value">3.2k</div>
-            <div class="admin-stat-change positive">+15% vs last month</div>
+            <div class="admin-stat-label">Total Leads</div>
+            <div class="admin-stat-value" id="totalLeads">...</div>
+            <div class="admin-stat-change positive">+12% increase</div>
           </div>
         </div>
 
@@ -140,13 +150,8 @@
         <div class="admin-table-wrapper">
           <div class="admin-table-header">
             <h2 class="admin-table-title">Recent Posts</h2>
-            <a href="post-editor.html" class="btn btn-primary btn-sm">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
-              New Post
-            </a>
+            <a href="posts.html" class="btn btn-secondary btn-sm"
+              style="font-size: 12px; padding: 0.25rem 0.75rem;">View All</a>
           </div>
           <table class="admin-table">
             <thead>
@@ -158,167 +163,18 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody id="postsTableBody">
+            <tbody id="recentPostsList">
+              <!-- Recent posts will be loaded here dynamically -->
               <tr>
-                <td><strong>10 SEO Strategies That Will Transform Your Local Business in 2025</strong></td>
-                <td>SEO</td>
-                <td><span class="admin-table-status published">Published</span></td>
-                <td>Jan 15, 2025</td>
-                <td>
-                  <div class="admin-table-actions">
-                    <button class="admin-table-action" title="Edit">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action" title="View">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action delete" title="Delete">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>How to Create a Social Media Strategy That Actually Converts</strong></td>
-                <td>Social Media</td>
-                <td><span class="admin-table-status published">Published</span></td>
-                <td>Jan 10, 2025</td>
-                <td>
-                  <div class="admin-table-actions">
-                    <button class="admin-table-action" title="Edit">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action" title="View">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action delete" title="Delete">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>The Ultimate Guide to Google Business Profile Optimization</strong></td>
-                <td>Google Business</td>
-                <td><span class="admin-table-status published">Published</span></td>
-                <td>Jan 5, 2025</td>
-                <td>
-                  <div class="admin-table-actions">
-                    <button class="admin-table-action" title="Edit">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action" title="View">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action delete" title="Delete">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>5 AI Tools Every Small Business Should Be Using Right Now</strong></td>
-                <td>AI Marketing</td>
-                <td><span class="admin-table-status draft">Draft</span></td>
-                <td>Dec 28, 2024</td>
-                <td>
-                  <div class="admin-table-actions">
-                    <button class="admin-table-action" title="Edit">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action" title="View">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action delete" title="Delete">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Why Your Website Might Be Costing You Customers</strong></td>
-                <td>Website Design</td>
-                <td><span class="admin-table-status draft">Draft</span></td>
-                <td>Dec 20, 2024</td>
-                <td>
-                  <div class="admin-table-actions">
-                    <button class="admin-table-action" title="Edit">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action" title="View">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button class="admin-table-action delete" title="Delete">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
+                <td colspan="5" style="text-align: center; padding: 2rem;">Loading recent posts...</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    </main>
+  </div>
+  </div>
+  </main>
   </div>
 
   <!-- Toast Notification -->

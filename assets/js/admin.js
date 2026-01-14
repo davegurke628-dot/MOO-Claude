@@ -3,11 +3,19 @@
  * Handles admin dashboard functionality
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   checkAuth();
   initSidebar();
   initLogout();
   loadUserInfo();
+
+  // Page specific initializations
+  const path = window.location.pathname;
+  if (path.includes('dashboard.html')) {
+    initDashboard();
+  } else if (path.includes('posts.html')) {
+    initPostsTable();
+  }
 });
 
 /**
@@ -84,8 +92,8 @@ function initSidebar() {
   // Close sidebar when clicking outside
   document.addEventListener('click', (e) => {
     if (window.innerWidth <= 1024 &&
-        !sidebar.contains(e.target) &&
-        !sidebarToggle.contains(e.target)) {
+      !sidebar.contains(e.target) &&
+      !sidebarToggle.contains(e.target)) {
       sidebar.classList.remove('active');
       sidebarToggle.classList.remove('active');
     }
@@ -191,15 +199,141 @@ function confirmDelete(id, title) {
   }
 }
 
-async function deletePost(id) {
+window.confirmDelete = confirmDelete;
+
+/**
+ * Dashboard Initialization
+ */
+async function initDashboard() {
   try {
-    await api.delete(`/posts/${id}`);
-    showToast('Post deleted successfully', 'success');
-    // Reload page or remove row
-    location.reload();
+    const stats = await api.get('/stats');
+    if (stats) {
+      const statsGrid = document.querySelector('.admin-stats');
+      if (statsGrid) {
+        const cards = statsGrid.querySelectorAll('.admin-stat-card');
+        cards.forEach(card => {
+          const labelEl = card.querySelector('.admin-stat-label');
+          if (!labelEl) return;
+          const label = labelEl.textContent;
+          const valueEl = card.querySelector('.admin-stat-value');
+          if (label.includes('Total Posts')) valueEl.textContent = stats.totalPosts || 0;
+          if (label.includes('Drafts')) valueEl.textContent = stats.draftPosts || 0;
+          if (label.includes('Categories')) valueEl.textContent = stats.totalCategories || 0;
+          if (label.includes('Leads')) valueEl.textContent = stats.totalLeads || 0;
+        });
+      }
+    }
+
+    // Load recent posts
+    const posts = await api.get('/posts?limit=5');
+    const recentPostsList = document.getElementById('recentPostsList');
+    if (recentPostsList && posts) {
+      if (posts.length === 0) {
+        recentPostsList.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;">No posts found</td></tr>';
+        return;
+      }
+      recentPostsList.innerHTML = posts.map(post => `
+        <tr>
+          <td>
+            <div style="font-weight: 500;">${post.title}</div>
+            <div style="font-size: 12px; color: var(--admin-text-secondary);">${post.category}</div>
+          </td>
+          <td>
+            <span class="admin-table-status ${post.status.toLowerCase()}">${post.status}</span>
+          </td>
+          <td>${new Date(post.date).toLocaleDateString()}</td>
+          <td>
+            <div class="admin-table-actions">
+              <a href="post-editor.html?id=${post.id}" class="admin-table-action">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+              </a>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
   } catch (error) {
-    showToast('Failed to delete post', 'error');
+    console.error('Dashboard init error:', error);
   }
 }
 
-window.confirmDelete = confirmDelete;
+/**
+ * Posts Table Initialization
+ */
+let currentOffset = 0;
+const PAGE_LIMIT = 10;
+
+async function initPostsTable(offset = 0) {
+  currentOffset = offset;
+  try {
+    const posts = await api.get(`/posts?limit=${PAGE_LIMIT}&offset=${offset}`);
+    const stats = await api.get('/stats');
+    const tableBody = document.getElementById('postsTableBody');
+    const countDisplay = document.getElementById('postCountDisplay');
+
+    if (!tableBody || !posts) return;
+
+    if (posts.length === 0 && offset === 0) {
+      tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No posts found</td></tr>';
+      if (countDisplay) countDisplay.textContent = 'No posts found';
+      return;
+    }
+
+    // Render Posts
+    tableBody.innerHTML = posts.map(post => `
+      <tr>
+        <td>
+          <div style="font-weight: 500;">${post.title}</div>
+          <div style="font-size: 12px; color: var(--admin-text-secondary);">${post.slug}</div>
+        </td>
+        <td>${post.category}</td>
+        <td>
+          <span class="admin-table-status ${post.status.toLowerCase()}">${post.status}</span>
+        </td>
+        <td>${new Date(post.date).toLocaleDateString()}</td>
+        <td>
+          <div class="admin-table-actions">
+            <a href="post-editor.html?id=${post.id}" class="admin-table-action" title="Edit">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+            </a>
+            <button class="admin-table-action delete" onclick="confirmDelete('${post.id}', '${post.title.replace(/'/g, "\\'")}')" title="Delete">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+    // Update count display
+    const total = stats.totalPosts || 0;
+    const start = offset + 1;
+    const end = Math.min(offset + PAGE_LIMIT, total);
+    if (countDisplay) {
+      countDisplay.textContent = `Showing ${start}-${end} of ${total} posts`;
+    }
+
+    // Update Pagination controls
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    if (prevBtn) prevBtn.disabled = offset === 0;
+    if (nextBtn) nextBtn.disabled = end >= total;
+
+  } catch (error) {
+    console.error('Posts table init error:', error);
+  }
+}
+
+// Global hook for pagination
+window.changePage = (direction) => {
+  const newOffset = direction === 'next' ? currentOffset + PAGE_LIMIT : currentOffset - PAGE_LIMIT;
+  initPostsTable(Math.max(0, newOffset));
+};
