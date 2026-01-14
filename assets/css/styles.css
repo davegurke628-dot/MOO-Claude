@@ -826,6 +826,22 @@ a:hover {
   color: var(--gold-400);
 }
 
+.service-card-image-box {
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.service-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .service-title {
   font-size: var(--text-xl);
   margin-bottom: var(--space-3);
@@ -2298,6 +2314,28 @@ a:hover {
   color: var(--gold-400);
 }
 
+.service-detail-image-box {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-base);
+}
+
+.service-detail-image-box:hover {
+  transform: scale(1.02);
+}
+
+.service-detail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .service-detail-eyebrow {
   font-size: var(--text-sm);
   font-weight: 600;
@@ -2352,9 +2390,8 @@ a:hover {
 
 /* ---------- Admin Styles ---------- */
 .admin-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
   min-height: 100vh;
+  background: var(--bg-light);
 }
 
 .admin-sidebar {
@@ -2431,11 +2468,16 @@ a:hover {
 
 .admin-header {
   background: var(--white);
-  padding: var(--space-6) var(--space-8);
+  padding: var(--space-4) var(--space-8);
   border-bottom: 1px solid var(--border-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .admin-title {
@@ -2606,6 +2648,7 @@ a:hover {
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: var(--space-8);
+  align-items: start;
 }
 
 .admin-editor-main {

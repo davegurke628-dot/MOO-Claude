@@ -105,11 +105,16 @@
     .upload-zone {
       border: 2px dashed var(--border-color);
       border-radius: var(--radius-xl);
-      padding: var(--space-12);
+      padding: var(--space-8) var(--space-6);
       text-align: center;
       background: var(--white);
       cursor: pointer;
       transition: all var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
     }
 
     .upload-zone:hover {

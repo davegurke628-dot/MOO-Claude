@@ -70,5 +70,39 @@
     "author_id": 1,
     "views": 0,
     "created_at": "2025-12-28T14:08:36.687Z"
+  },
+  {
+    "id": 5,
+    "title": "Automated Verification Post",
+    "slug": "automated-verification-post",
+    "content": "<p>Testing the backend persistence after layout fixes.</p>",
+    "excerpt": "Testing the backend persistence after layout fixes....",
+    "category": "",
+    "tags": [],
+    "status": "published",
+    "meta_title": "Automated Verification Post",
+    "meta_description": "Testing the backend persistence after layout fixes....",
+    "featured_image": null,
+    "author_id": 1,
+    "views": 0,
+    "published_at": "2026-01-14T00:23:04.560Z",
+    "created_at": "2026-01-14T00:23:04.560Z"
+  },
+  {
+    "id": 6,
+    "title": "Test Post",
+    "slug": "test-post",
+    "content": "<p>Simple content.</p>",
+    "excerpt": "Simple content....",
+    "category": "seo",
+    "tags": [],
+    "status": "published",
+    "meta_title": "Test Post",
+    "meta_description": "Simple content....",
+    "featured_image": null,
+    "author_id": 1,
+    "views": 0,
+    "published_at": "2026-01-14T00:29:03.393Z",
+    "created_at": "2026-01-14T00:29:03.393Z"
   }
 ]
