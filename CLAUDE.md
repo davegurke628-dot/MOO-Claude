@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Marketing Options Online (MOO) is a digital marketing agency website with a built-in CMS. It's a Node.js/Express application with a static HTML frontend and JSON file-based storage (no external database required).
+Marketing Options Online (MOO) is a digital marketing agency website with a built-in CMS. It's a Node.js/Express application with a static HTML frontend and JSON file-based storage (no external database required). Requires Node.js 18+.
 
 ## Commands
 
@@ -52,18 +52,21 @@ The server runs on `http://localhost:3000` by default (configurable via PORT env
 **Public pages:**
 - `index.html` - Homepage with services, testimonials, lead magnet form, audit tool
 - `services.html`, `about.html`, `contact.html`, `blog.html`, `blog-post.html`
+- `service-*.html` - Individual service detail pages (seo, social-media, google-business, ai-marketing, content-creation, website-design)
 
 **Admin pages (`admin/`):**
 - `login.html` - Admin authentication
 - `dashboard.html` - Stats overview
-- `posts.html` - Post management
+- `posts.html` - Post management with pagination
 - `post-editor.html` - Create/edit posts
 - `media.html` - Media library
+- `settings.html` - User settings
 
 **JavaScript (`assets/js/`):**
 - `main.js` - Public site: header scroll, mobile menu, animations, form handling
 - `admin.js` - Admin: authentication check, sidebar, API helper object (`window.api`)
 - `audit-tool.js` - Website health check tool (simulated analysis)
+- `hero-background.js` - Homepage animated background
 
 ### Default Credentials
 

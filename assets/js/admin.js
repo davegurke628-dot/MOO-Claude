@@ -225,9 +225,10 @@ async function initDashboard() {
     }
 
     // Load recent posts
-    const posts = await api.get('/posts?limit=5');
+    const data = await api.get('/posts?limit=5');
+    const posts = data.posts || [];
     const recentPostsList = document.getElementById('recentPostsList');
-    if (recentPostsList && posts) {
+    if (recentPostsList) {
       if (posts.length === 0) {
         recentPostsList.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;">No posts found</td></tr>';
         return;
@@ -269,12 +270,18 @@ const PAGE_LIMIT = 10;
 async function initPostsTable(offset = 0) {
   currentOffset = offset;
   try {
-    const posts = await api.get(`/posts?limit=${PAGE_LIMIT}&offset=${offset}`);
+    const status = document.getElementById('statusFilter')?.value || '';
+    const category = document.getElementById('categoryFilter')?.value || '';
+
+    const data = await api.get(`/posts?limit=${PAGE_LIMIT}&offset=${offset}&status=${status}&category=${category}`);
+    const posts = data.posts || [];
+    const total = data.total || 0;
+
     const stats = await api.get('/stats');
     const tableBody = document.getElementById('postsTableBody');
     const countDisplay = document.getElementById('postCountDisplay');
 
-    if (!tableBody || !posts) return;
+    if (!tableBody) return;
 
     if (posts.length === 0 && offset === 0) {
       tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No posts found</td></tr>';
@@ -314,8 +321,7 @@ async function initPostsTable(offset = 0) {
     `).join('');
 
     // Update count display
-    const total = stats.totalPosts || 0;
-    const start = offset + 1;
+    const start = total === 0 ? 0 : offset + 1;
     const end = Math.min(offset + PAGE_LIMIT, total);
     if (countDisplay) {
       countDisplay.textContent = `Showing ${start}-${end} of ${total} posts`;
@@ -326,6 +332,20 @@ async function initPostsTable(offset = 0) {
     const nextBtn = document.getElementById('nextPage');
     if (prevBtn) prevBtn.disabled = offset === 0;
     if (nextBtn) nextBtn.disabled = end >= total;
+
+    // Add filter listeners if not already added
+    const statusFilter = document.getElementById('statusFilter');
+    const categoryFilter = document.getElementById('categoryFilter');
+
+    if (statusFilter && !statusFilter.dataset.listenerAdded) {
+      statusFilter.addEventListener('change', () => initPostsTable(0));
+      statusFilter.dataset.listenerAdded = 'true';
+    }
+
+    if (categoryFilter && !categoryFilter.dataset.listenerAdded) {
+      categoryFilter.addEventListener('change', () => initPostsTable(0));
+      categoryFilter.dataset.listenerAdded = 'true';
+    }
 
   } catch (error) {
     console.error('Posts table init error:', error);

@@ -111,7 +111,7 @@
     <main class="admin-main">
       <header class="admin-header">
         <div style="display: flex; align-items: center; gap: var(--space-4);">
-          <a href="dashboard.html" style="color: var(--slate-600); display: flex; align-items: center;">
+          <a href="posts.html" class="btn btn-ghost btn-sm" style="padding: var(--space-2);">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="19" y1="12" x2="5" y2="12" />
               <polyline points="12 19 5 12 12 5" />
@@ -120,8 +120,21 @@
           <h1 class="admin-title">New Post</h1>
         </div>
         <div style="display: flex; gap: var(--space-3);">
-          <button class="btn btn-secondary btn-sm" id="saveDraftBtn">Save Draft</button>
-          <button class="btn btn-primary btn-sm" id="publishBtn">Publish</button>
+          <button class="btn btn-secondary" id="saveDraftBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Draft
+          </button>
+          <button class="btn btn-primary" id="publishBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M22 2L11 13"/>
+              <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+            Publish
+          </button>
         </div>
       </header>
 
@@ -141,8 +154,16 @@
             <div class="admin-editor-sidebar">
               <!-- Status Panel -->
               <div class="admin-editor-panel">
-                <h3 class="admin-editor-panel-title">Status</h3>
-                <select id="postStatus" class="form-input" style="margin-bottom: 0;">
+                <h3 class="admin-editor-panel-title">
+                  <span style="display: flex; align-items: center; gap: var(--space-2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Status
+                  </span>
+                </h3>
+                <select id="postStatus" class="form-select">
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
                   <option value="scheduled">Scheduled</option>
@@ -151,8 +172,15 @@
 
               <!-- Category Panel -->
               <div class="admin-editor-panel">
-                <h3 class="admin-editor-panel-title">Category</h3>
-                <select id="postCategory" class="form-input" style="margin-bottom: 0;">
+                <h3 class="admin-editor-panel-title">
+                  <span style="display: flex; align-items: center; gap: var(--space-2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Category
+                  </span>
+                </h3>
+                <select id="postCategory" class="form-select">
                   <option value="">Select category...</option>
                   <option value="seo">SEO</option>
                   <option value="social-media">Social Media</option>
@@ -168,47 +196,96 @@
               <!-- Featured Image Panel -->
               <div class="admin-editor-panel">
                 <h3 class="admin-editor-panel-title">
-                  Featured Image
-                  <button type="button" class="btn btn-sm"
-                    style="padding: var(--space-1) var(--space-2); font-size: var(--text-xs);"
-                    id="uploadImageBtn">Upload</button>
+                  <span style="display: flex; align-items: center; gap: var(--space-2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Featured Image
+                  </span>
                 </h3>
-                <div id="featuredImagePreview"
-                  style="width: 100%; height: 150px; background: var(--bg-light); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; border: 2px dashed var(--border-color); cursor: pointer;">
-                  <span style="color: var(--slate-500); font-size: var(--text-sm);">Click to upload image</span>
+                <div id="featuredImagePreview" class="image-upload-area">
+                  <div class="image-upload-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <div class="image-upload-text">
+                    <div class="image-upload-text-main">Click to upload image</div>
+                    <div class="image-upload-text-sub">PNG, JPG up to 5MB</div>
+                  </div>
                 </div>
                 <input type="file" id="featuredImageInput" accept="image/*" style="display: none;">
               </div>
 
               <!-- SEO Panel -->
               <div class="admin-editor-panel">
-                <h3 class="admin-editor-panel-title">SEO Settings</h3>
-                <div class="form-group" style="margin-bottom: var(--space-4);">
+                <h3 class="admin-editor-panel-title">
+                  <span style="display: flex; align-items: center; gap: var(--space-2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                      <circle cx="11" cy="11" r="8"/>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    SEO Settings
+                  </span>
+                </h3>
+
+                <!-- Google Preview -->
+                <div class="seo-preview">
+                  <div class="seo-preview-title" id="seoPreviewTitle">Your post title will appear here</div>
+                  <div class="seo-preview-url" id="seoPreviewUrl">marketingoptionsonline.com/blog/post-slug</div>
+                  <div class="seo-preview-description" id="seoPreviewDesc">Your meta description will appear here. Make it compelling to improve click-through rates from search results.</div>
+                </div>
+
+                <div class="form-group">
                   <label class="form-label" for="metaTitle">Meta Title</label>
-                  <input type="text" id="metaTitle" class="form-input" placeholder="SEO title (60 chars max)"
-                    maxlength="60" style="margin-bottom: 0;">
-                  <small style="color: var(--slate-500); font-size: var(--text-xs);"><span
-                      id="metaTitleCount">0</span>/60</small>
+                  <input type="text" id="metaTitle" class="form-input" placeholder="SEO title (60 chars max)" maxlength="60">
+                  <div class="char-counter">
+                    <div class="char-counter-bar">
+                      <div class="char-counter-fill" id="metaTitleFill" style="width: 0%"></div>
+                    </div>
+                    <span class="char-counter-text"><span id="metaTitleCount">0</span>/60</span>
+                  </div>
                 </div>
-                <div class="form-group" style="margin-bottom: var(--space-4);">
+
+                <div class="form-group">
                   <label class="form-label" for="metaDescription">Meta Description</label>
-                  <textarea id="metaDescription" class="form-input" placeholder="SEO description (160 chars max)"
-                    maxlength="160" rows="3" style="margin-bottom: 0;"></textarea>
-                  <small style="color: var(--slate-500); font-size: var(--text-xs);"><span
-                      id="metaDescCount">0</span>/160</small>
+                  <textarea id="metaDescription" class="form-textarea" placeholder="SEO description (160 chars max)" maxlength="160" rows="3"></textarea>
+                  <div class="char-counter">
+                    <div class="char-counter-bar">
+                      <div class="char-counter-fill" id="metaDescFill" style="width: 0%"></div>
+                    </div>
+                    <span class="char-counter-text"><span id="metaDescCount">0</span>/160</span>
+                  </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
+
+                <div class="form-group">
                   <label class="form-label" for="postSlug">URL Slug</label>
-                  <input type="text" id="postSlug" class="form-input" placeholder="post-url-slug"
-                    style="margin-bottom: 0;">
+                  <div style="display: flex; align-items: center; gap: var(--space-2);">
+                    <span style="color: var(--admin-text-muted); font-size: var(--text-sm);">/blog/</span>
+                    <input type="text" id="postSlug" class="form-input" placeholder="post-url-slug" style="flex: 1;">
+                  </div>
                 </div>
               </div>
 
               <!-- Tags Panel -->
               <div class="admin-editor-panel">
-                <h3 class="admin-editor-panel-title">Tags</h3>
-                <input type="text" id="postTags" class="form-input" placeholder="Enter tags, comma separated"
-                  style="margin-bottom: 0;">
+                <h3 class="admin-editor-panel-title">
+                  <span style="display: flex; align-items: center; gap: var(--space-2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                      <line x1="7" y1="7" x2="7.01" y2="7"/>
+                    </svg>
+                    Tags
+                  </span>
+                </h3>
+                <input type="text" id="postTags" class="form-input" placeholder="Enter tags, comma separated">
+                <div style="margin-top: var(--space-2); font-size: var(--text-xs); color: var(--admin-text-muted);">
+                  Press Enter or comma to add tags
+                </div>
               </div>
             </div>
           </div>
@@ -241,22 +318,66 @@
       }
     });
 
-    // SEO character counters
-    document.getElementById('metaTitle').addEventListener('input', function () {
-      document.getElementById('metaTitleCount').textContent = this.value.length;
+    // Character counter with visual progress
+    function updateCharCounter(input, countEl, fillEl, maxLength) {
+      const length = input.value.length;
+      const percentage = (length / maxLength) * 100;
+
+      countEl.textContent = length;
+      fillEl.style.width = `${Math.min(percentage, 100)}%`;
+
+      // Color coding
+      fillEl.classList.remove('warning', 'danger');
+      if (percentage >= 90) {
+        fillEl.classList.add('danger');
+      } else if (percentage >= 70) {
+        fillEl.classList.add('warning');
+      }
+    }
+
+    // Meta title counter
+    const metaTitleInput = document.getElementById('metaTitle');
+    const metaTitleCount = document.getElementById('metaTitleCount');
+    const metaTitleFill = document.getElementById('metaTitleFill');
+
+    metaTitleInput.addEventListener('input', function() {
+      updateCharCounter(this, metaTitleCount, metaTitleFill, 60);
+      document.getElementById('seoPreviewTitle').textContent = this.value || 'Your post title will appear here';
     });
 
-    document.getElementById('metaDescription').addEventListener('input', function () {
-      document.getElementById('metaDescCount').textContent = this.value.length;
+    // Meta description counter
+    const metaDescInput = document.getElementById('metaDescription');
+    const metaDescCount = document.getElementById('metaDescCount');
+    const metaDescFill = document.getElementById('metaDescFill');
+
+    metaDescInput.addEventListener('input', function() {
+      updateCharCounter(this, metaDescCount, metaDescFill, 160);
+      document.getElementById('seoPreviewDesc').textContent = this.value || 'Your meta description will appear here. Make it compelling to improve click-through rates from search results.';
     });
 
     // Auto-generate slug from title
-    document.getElementById('postTitle').addEventListener('input', function () {
+    const postTitleInput = document.getElementById('postTitle');
+    const postSlugInput = document.getElementById('postSlug');
+
+    postTitleInput.addEventListener('input', function() {
       const slug = this.value
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '');
-      document.getElementById('postSlug').value = slug;
+      postSlugInput.value = slug;
+
+      // Update SEO preview
+      document.getElementById('seoPreviewUrl').textContent = `marketingoptionsonline.com/blog/${slug || 'post-slug'}`;
+
+      // Also update meta title preview if meta title is empty
+      if (!metaTitleInput.value) {
+        document.getElementById('seoPreviewTitle').textContent = this.value || 'Your post title will appear here';
+      }
+    });
+
+    // Update URL preview when slug changes
+    postSlugInput.addEventListener('input', function() {
+      document.getElementById('seoPreviewUrl').textContent = `marketingoptionsonline.com/blog/${this.value || 'post-slug'}`;
     });
 
     // Featured image upload
@@ -264,13 +385,18 @@
     const imageInput = document.getElementById('featuredImageInput');
 
     imagePreview.addEventListener('click', () => imageInput.click());
-    document.getElementById('uploadImageBtn').addEventListener('click', () => imageInput.click());
 
-    imageInput.addEventListener('change', function () {
+    imageInput.addEventListener('change', function() {
       if (this.files && this.files[0]) {
         const reader = new FileReader();
-        reader.onload = function (e) {
-          imagePreview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);">`;
+        reader.onload = function(e) {
+          imagePreview.innerHTML = `
+            <img src="${e.target.result}" class="image-upload-preview">
+            <div class="image-upload-overlay">
+              <span style="color: white; font-weight: 500;">Click to change</span>
+            </div>
+          `;
+          imagePreview.classList.add('has-image');
         };
         reader.readAsDataURL(this.files[0]);
       }
@@ -291,13 +417,25 @@
           document.getElementById('postTitle').value = post.title || '';
           quill.root.innerHTML = post.content || '';
           document.getElementById('postCategory').value = post.category || 'Blog';
+          document.getElementById('postStatus').value = post.status || 'draft';
           document.getElementById('metaTitle').value = post.metaTitle || '';
           document.getElementById('metaDescription').value = post.metaDescription || '';
           document.getElementById('postSlug').value = post.slug || '';
           document.getElementById('postTags').value = post.tags ? post.tags.join(', ') : '';
 
+          // Trigger counter updates
+          metaTitleInput.dispatchEvent(new Event('input'));
+          metaDescInput.dispatchEvent(new Event('input'));
+          postTitleInput.dispatchEvent(new Event('input'));
+
           if (post.featuredImage) {
-            imagePreview.innerHTML = `<img src="${post.featuredImage}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg);">`;
+            imagePreview.innerHTML = `
+              <img src="${post.featuredImage}" class="image-upload-preview">
+              <div class="image-upload-overlay">
+                <span style="color: white; font-weight: 500;">Click to change</span>
+              </div>
+            `;
+            imagePreview.classList.add('has-image');
           }
 
           // Update header title
@@ -309,12 +447,12 @@
     }
 
     // Save draft
-    document.getElementById('saveDraftBtn').addEventListener('click', async function () {
+    document.getElementById('saveDraftBtn').addEventListener('click', async function() {
       await savePost('draft');
     });
 
     // Publish
-    document.getElementById('publishBtn').addEventListener('click', async function () {
+    document.getElementById('publishBtn').addEventListener('click', async function() {
       await savePost('published');
     });
 
@@ -377,7 +515,7 @@
     }
 
     // Logout
-    document.getElementById('logoutBtn').addEventListener('click', function (e) {
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
       e.preventDefault();
       localStorage.removeItem('authToken');
       localStorage.removeItem('user');
